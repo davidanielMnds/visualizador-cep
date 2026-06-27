@@ -9,19 +9,26 @@ import java.util.List;
 
 @Service
 public class CepService {
-    private List<String> historico = new ArrayList<>();
+    private List<EnderecoDTO> historico = new ArrayList<>();
     private static final String VIA_CEP_URL = "https://viacep.com.br/ws/{cep}/json/";
 
     public EnderecoDTO buscarCEP(String cep) {
         RestTemplate restTemplate = new RestTemplate();
         EnderecoDTO endereco = restTemplate.getForObject(VIA_CEP_URL, EnderecoDTO.class, cep);
         if(endereco != null && endereco.getLocalidade() != null) {
-            historico.add(endereco.getLocalidade());
+            historico.add(endereco);
         }
         return endereco;
     }
 
-    public List getHistorico() {
+    public List<EnderecoDTO> getHistorico() {
         return historico;
+    }
+    public List<String> getHistoricoCep() {
+        List<String> listaCeps = new ArrayList<>();
+        for(EnderecoDTO a : historico) {
+            listaCeps.add(a.getCep());
+        }
+        return listaCeps;
     }
 }

@@ -22,7 +22,12 @@ public class CepController {
     }
     //------------------- GET historico
     @GetMapping("/historico")
-    public List<String> historico() {
+    public List<EnderecoDTO> historico() {
         return cepService.getHistorico();
+    }
+    //-------------------- GET historico somente CEP
+    @GetMapping("/historico/cep")
+    public List<String> historicoCep(){
+        return cepService.getHistoricoCep();
     }
 }
