@@ -14,9 +14,13 @@ public class CepService {
 
     public EnderecoDTO buscarCEP(String cep) {
         RestTemplate restTemplate = new RestTemplate();
-        historico.add(cep);
-        return restTemplate.getForObject(VIA_CEP_URL, EnderecoDTO.class, cep);
+        EnderecoDTO endereco = restTemplate.getForObject(VIA_CEP_URL, EnderecoDTO.class, cep);
+        if(endereco != null && endereco.getLocalidade() != null) {
+            historico.add(endereco.getLocalidade());
+        }
+        return endereco;
     }
+
     public List getHistorico() {
         return historico;
     }
