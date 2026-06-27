@@ -1,4 +1,4 @@
-package com.d4igen.visualizar_cep;
+package com.d4igen.visualizar_cep.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
