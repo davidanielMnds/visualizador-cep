@@ -8,13 +8,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/cep")
 public class CepController {
     @Autowired
     private CepService cepService;
+    //------------------- GET cep
     @GetMapping("/{cep}")
     public EnderecoDTO buscarCep(@PathVariable String cep) {
         return cepService.buscarCEP(cep);
+    }
+    //------------------- GET historico
+    @GetMapping("/historico")
+    public List<String> historico() {
+        return cepService.getHistorico();
     }
 }
