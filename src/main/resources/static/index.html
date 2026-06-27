@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rastreador de CEP</title>
+</head>
+
+<body>
+<header>
+    <h1>Rastreador de cep</h1>
+    <nav>
+        <a>home</a>
+        <a href="/historico.html">histórico</a>
+    </nav>
+</header>
+<main>
+    <section id="buscar">
+        <form id="formularioCep">
+            <label for="txtPesquisa">CEP</label>
+            <input type="text" placeholder="digite o CEP" id="txtPesquisa">
+            <button type="submit">buscar</button>
+        </form>
+        <div id="resultado">
+
+        </div>
+    </section>
+</main>
+<script>
+    document.getElementById("formularioCep").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const cep = document.getElementById("txtPesquisa").value;
+
+        fetch(`/cep/${cep}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("resultado").innerHTML = `
+                    <p>CEP: ${data.cep}</p>
+                    <p>Logradouro: ${data.logradouro}</p>
+                    <p>Bairro: ${data.bairro}</p>
+                    <p>Cidade: ${data.localidade}</p>
+                    <p>UF: ${data.uf}</p>
+                `;
+            });
+    });
+</script>
+</body>
+</html>

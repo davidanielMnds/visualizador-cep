@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rastreador de cep</title>
+</head>
+<body>
+<!----------------------header -->
+<header>
+    <h1>Histórico de Buscas</h1>
+    <!----------------------------- nav -->
+    <nav>
+        <a href="/index.html">home</a>
+        <a>histórico</a>
+    </nav>
+</header>
+<!----------------------main -->
+<main>
+    <!------------------filtro -->
+    <label for="filtro"></label>
+    <select id="filtro">
+        <option value="completo">Histórico Completo</option>
+        <option value="cep">Somente CEP</option>
+    </select>
+    <!------------------filtro -->
+    <ul id="listaHistorico"></ul>
+</main>
+<script>
+    function atualizarHistorico() {
+        const filtro = document.getElementById("filtro").value;
+        const lista = document.getElementById("listaHistorico");
+        lista.innerHTML = "";
+
+        if(filtro === "cep") {
+            fetch("/cep/historico/cep")
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(cep => {
+                        lista.innerHTML += `<div class="card"><H4>Cep: ${cep}</H4></div>`;
+                    });
+                });
+        }
+        else {
+            fetch("/cep/historico")
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    data.forEach(endereco => {
+                        lista.innerHTML +=
+                            `
+                           <div class="card">
+                                <h4>Cep: ${endereco.cep}</h4>
+                                <p>Estado: ${endereco.uf}</p>
+                                <p>Cidade ${endereco.localidade}</p>
+                                <p>Bairro ${endereco.bairro}</p>
+                                <p>Logradouro ${endereco.logradouro}</p>
+                            </div>
+                            `;
+                    }) ;
+                });
+        }
+    }
+    document.getElementById("filtro").addEventListener("change", atualizarHistorico);
+    atualizarHistorico();
+</script>
+</body>
+</html>
