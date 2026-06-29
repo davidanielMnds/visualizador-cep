@@ -3,28 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Rastreador de CEP</title>
+    <link href="https://fonts.googleapis.com/css2?family=NomeDaFonte&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-<header>
-    <h1>Rastreador de cep</h1>
+<div class="container">
+
+<aside class="sidebar">
+    <h3>Menu</h3>
     <nav>
-        <a>home</a>
+        <a class="active">home</a>
         <a href="/historico.html">histórico</a>
     </nav>
-</header>
+</aside>
+
 <main>
     <section id="buscar">
+        <div id="texto">
+            <h2>consultor de cep</h2>
+            <p>utilizando api da viacep.com.br</p>
+        </div>
         <form id="formularioCep">
-            <label for="txtPesquisa">CEP</label>
-            <input type="text" placeholder="digite o CEP" id="txtPesquisa">
+            <input type="text" placeholder="CEP" id="txtPesquisa">
             <button type="submit">buscar</button>
         </form>
-        <div id="resultado">
-
-        </div>
     </section>
+
+    <section id="resultado"></section>
 </main>
+
+</div>
 <script>
     document.getElementById("formularioCep").addEventListener("submit", function(event) {
         event.preventDefault();
@@ -35,11 +44,31 @@
             .then(response => response.json())
             .then(data => {
                 document.getElementById("resultado").innerHTML = `
-                    <p>CEP: ${data.cep}</p>
-                    <p>Logradouro: ${data.logradouro}</p>
-                    <p>Bairro: ${data.bairro}</p>
-                    <p>Cidade: ${data.localidade}</p>
-                    <p>UF: ${data.uf}</p>
+                
+                    <div class="campo">
+                        <span class="label">CEP:</span>
+                        <span class="valor">${data.cep}</span>
+                    </div>
+
+                    <div class="campo">
+                        <span class="label">Logradouro:</span>
+                        <span class="valor">${data.logradouro}</span>
+                    </div>
+
+                    <div class="campo">
+                        <span class="label">Bairro:</span>
+                        <span class="valor">${data.bairro}</span>    
+                    </div>
+                    
+                    <div class="campo">
+                        <span class="label">Localidade:</span>
+                        <span class="valor">${data.localidade}</span>
+                    </div>
+                    
+                    <div class="campo">
+                        <span class="label">UF:</span>
+                        <span class="valor">${data.uf}</span>
+                    </div>
                 `;
             });
     });
